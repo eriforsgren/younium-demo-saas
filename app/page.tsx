@@ -2,14 +2,6 @@
 'use client'
 
 import { useState } from 'react'
-import { DEMO_USERS, DemoUserId } from '@/lib/auth/demo-users'
-
-// Hardcoded demo credentials. Maps email → demo user ID.
-// In a real app, this would be a database with hashed passwords.
-const DEMO_CREDENTIALS: Record<string, { password: string; userId: DemoUserId }> = {
-  'bob@proco.com': { password: 'demo123', userId: 'bob' },
-  'carol@enterpriseco.com': { password: 'demo123', userId: 'carol' },
-}
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -22,32 +14,35 @@ export default function LoginPage() {
     setError(null)
     setIsSubmitting(true)
 
-    // Tiny artificial delay so it feels like a real network request
-    await new Promise((r) => setTimeout(r, 400))
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      })
 
-    const credential = DEMO_CREDENTIALS[email.toLowerCase().trim()]
-    if (!credential || credential.password !== password) {
-      setError('Invalid email or password.')
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({}))
+        setError(data.error || 'Invalid email or password.')
+        setIsSubmitting(false)
+        return
+      }
+
+      window.location.href = '/dashboard'
+    } catch {
+      setError('Something went wrong. Please try again.')
       setIsSubmitting(false)
-      return
     }
-
-    // We'll wire up the real session in the next task.
-    // For now just confirm the click works.
-    alert(`Login flow not built yet. You logged in as: ${credential.userId}`)
-    setIsSubmitting(false)
   }
 
   return (
     <main className="min-h-screen flex items-center justify-center bg-gray-50 p-6">
       <div className="w-full max-w-md">
-        {/* Logo / brand */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Tasksy</h1>
           <p className="text-gray-500 text-sm mt-1">Project management, simplified.</p>
         </div>
 
-        {/* Card */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
           <h2 className="text-xl font-semibold text-gray-900 mb-1">Sign in</h2>
           <p className="text-sm text-gray-500 mb-6">
@@ -109,7 +104,6 @@ export default function LoginPage() {
           </form>
         </div>
 
-        {/* Demo helper text */}
         <div className="mt-6 bg-blue-50 border border-blue-200 rounded-xl p-4">
           <p className="text-xs font-semibold text-blue-900 mb-2">Demo accounts</p>
           <div className="text-xs text-blue-800 space-y-1 font-mono">
