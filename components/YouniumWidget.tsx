@@ -144,34 +144,36 @@ export function YouniumWidget({ userId }: YouniumWidgetProps) {
         </div>
       )}
 
-      {!initialized && !error && (
-        <div className="bg-white border border-gray-200 rounded-2xl p-6 animate-pulse">
-          <div className="h-4 bg-gray-200 rounded w-1/3 mb-4" />
-          <div className="h-3 bg-gray-100 rounded w-2/3 mb-2" />
-          <div className="h-3 bg-gray-100 rounded w-1/2" />
+{!initialized && !error && (
+        <div className="space-y-3">
+          <div className="bg-white border border-gray-200 rounded-2xl p-6 animate-pulse">
+            <div className="h-3 bg-gray-200 rounded w-1/4 mb-4" />
+            <div className="h-3 bg-gray-100 rounded w-1/2" />
+          </div>
         </div>
       )}
 
-      {/* Containers — the SDK renders into these */}
-      <div className="bg-white border border-gray-200 rounded-2xl p-6">
-        <h3 className="text-base font-semibold text-gray-900 mb-4">
-          Account information
-        </h3>
-        <div id="younium-account" />
-      </div>
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <section className="space-y-2">
+          <h2 className="text-sm font-semibold text-gray-700 px-1">
+            Account information
+          </h2>
+          <div id="younium-account" />
+        </section>
 
-      <div className="bg-white border border-gray-200 rounded-2xl p-6">
-        <h3 className="text-base font-semibold text-gray-900 mb-4">
-          Your subscription
-        </h3>
-        <div id="younium-subscription" />
-      </div>
+        <section className="space-y-2">
+          <h2 className="text-sm font-semibold text-gray-700 px-1">
+            Your subscription
+          </h2>
+          <div id="younium-subscription" />
+        </section>
 
-      <div className="bg-white border border-gray-200 rounded-2xl p-6">
-        <h3 className="text-base font-semibold text-gray-900 mb-4">
-          Invoices
-        </h3>
-        <div id="younium-invoices" />
+        <section className="space-y-2 md:col-span-2">
+          <h2 className="text-sm font-semibold text-gray-700 px-1">
+            Invoices
+          </h2>
+          <div id="younium-invoices" />
+        </section>
       </div>
     </>
   )

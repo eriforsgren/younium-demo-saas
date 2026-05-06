@@ -1,4 +1,5 @@
 // components/StubPage.tsx
+import { Sparkles } from 'lucide-react'
 import { Sidebar } from './Sidebar'
 import { TopBar } from './TopBar'
 
@@ -20,13 +21,18 @@ export function StubPage({ title, description, userName, userCompany }: StubPage
         <main className="flex-1 p-8">
           <div className="max-w-3xl mx-auto">
             <div className="bg-white rounded-2xl border border-gray-200 p-12 text-center">
-              <div className="text-5xl mb-4">🚧</div>
-              <h2 className="text-xl font-semibold text-gray-900 mb-2">
-                {title} is under construction
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-gray-100 to-gray-50 border border-gray-200 mx-auto mb-4 flex items-center justify-center">
+                <Sparkles className="w-5 h-5 text-gray-500" strokeWidth={2} />
+              </div>
+              <h2 className="text-lg font-semibold text-gray-900 mb-1.5">
+                {title}
               </h2>
-              <p className="text-sm text-gray-500 max-w-md mx-auto">
+              <p className="text-sm text-gray-500 max-w-md mx-auto leading-relaxed">
                 {description}
               </p>
+              <div className="mt-6 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gray-100 border border-gray-200 text-xs font-medium text-gray-600">
+                Coming soon
+              </div>
             </div>
           </div>
         </main>

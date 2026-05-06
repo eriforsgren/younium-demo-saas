@@ -22,7 +22,7 @@ export default async function BillingPage() {
         />
 
         <main className="flex-1 p-8">
-          <div className="max-w-4xl mx-auto space-y-6">
+        <div className="max-w-5xl mx-auto space-y-4">
             <YouniumWidget userId={session.userId} />
           </div>
         </main>
