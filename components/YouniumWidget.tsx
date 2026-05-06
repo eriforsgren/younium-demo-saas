@@ -51,6 +51,14 @@ export function YouniumWidget({ userId }: YouniumWidgetProps) {
     const data = await res.json()
     return data.token
   }
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const win = window as WindowWithYounium
+    if (win.YouniumEmbedded && !scriptLoaded) {
+      console.log('[YouniumWidget] SDK already on window, reusing')
+      setScriptLoaded(true)
+    }
+  }, [scriptLoaded])
 
   useEffect(() => {
     if (!scriptLoaded || initialized) return
@@ -96,7 +104,13 @@ export function YouniumWidget({ userId }: YouniumWidgetProps) {
   
           sdk.renderComponent(
             win.YouniumEmbedded.COMPONENT_TYPES.ACCOUNT_INFO,
-            { containerId: 'younium-account' }
+            {
+              containerId: 'younium-account',
+              options: {
+                allowEdit: true,
+                showDetails: true,
+              },
+            }
           )
 
         setInitialized(true)
